@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Networks with Headline and Centered Phone</title>
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400&display=swap" rel="stylesheet"> -->
+
+    <!-- open sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            /* font-family: 'Space Grotesk', sans-serif; */
+            font-family: 'Open Sans', sans-serif;
+            background-color: #2F3D44;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-size: 1.5em;
+            font-weight: 300;
+            margin: 0 0 2rem;
+            max-width: 100%;
+        }
+
+        h2 {
+            font-size: 1.2em;
+            font-weight: 300;
+            margin: 0;
+            max-width: 100%;
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+        }
+
+        .col {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mobile-device-container {
+            position: relative;
+            width: 139px;
+            height: 257px;
+            overflow: visible;
+        }
+
+        .mobile-device {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 2;
+            overflow: visible;
+        }
+
+        .phone-network {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 120%;
+            z-index: 1;
+            overflow: visible;
+        }
+
+        .background-container {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            /* overflow: hidden; */
+            overflow: visible;
+            z-index: -1;
+        }
+
+        svg.background {
+            width: 100%;
+            /* height: 100%; */
+            overflow: visible;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-container">
+        <svg class="background" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500">
+            <rect width="100%" height="100%" fill="#2F3D44" />
+            <g id="network1"></g>
+            <g id="network2"></g>
+            <g id="network3"></g>
+        </svg>
+    </div>
+    <div class="container">
+        <h1>Transforming how behavioral health support is delivered with AI augmentation</h1>
+        <div class="row">
+            <div class="col">
+                <div class="mobile-device-container">
+                    <svg class="phone-network" viewBox="0 0 100 100">
+                        <g id="phoneNetwork"></g>
+                    </svg>
+                    <svg class="mobile-device" width="139" height="257" viewBox="0 0 139 257" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <rect x="3.52832" y="0.694214" width="132.957" height="254.827" rx="19.5" stroke="white" />
+                        <rect x="27.2002" y="155" width="99.712" height="21.151" rx="6" fill="black"
+                            fill-opacity="0.16" />
+                        <circle cx="16" cy="172" r="4" fill="#D9D9D9" />
+                        <rect width="99.7122" height="21.151" rx="6" transform="matrix(-1 0 0 1 111.712 181.151)"
+                            fill="black" fill-opacity="0.16" />
+                        <ellipse cx="4.00001" cy="4" rx="4.00001" ry="4" transform="matrix(-1 0 0 1 126.912 194.151)"
+                            fill="#D9D9D9" />
+                        <rect x="27.2002" y="207.302" width="99.712" height="21.151" rx="6" fill="black"
+                            fill-opacity="0.16" />
+                        <circle cx="16" cy="224.302" r="4" fill="#D9D9D9" />
+                        <rect x="136" y="71" width="3" height="30" rx="1.5" fill="white" />
+                        <rect x="0.977539" y="71" width="3.02158" height="13.0935" rx="1.51079" fill="white" />
+                        <rect x="0.977539" y="87.6761" width="3.02158" height="13.0935" rx="1.51079" fill="white" />
+                    </svg>
+                </div>
+            </div>
+            <div class="col">
+                <h2>Supercharging professionals to deliver enhanced care and achieve superior outcomes</h2>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const svg = document.querySelector('svg.background');
+            const networks = [
+                document.getElementById('network1'),
+                document.getElementById('network2'),
+                document.getElementById('network3'),
+                document.getElementById('phoneNetwork')
+            ];
+
+            const centerColor = '#FFFFFF';
+            const orbitColor = '#34C0EC';
+            const nodeRadius = 2;
+            const networkSize = 40;
+            const phoneNetworkSize = 40;
+            const nodesInOrbit = 8;
+            const wanderRadius = nodeRadius * 4;
+            const maxSpeed = 0.03;
+            const networkSpeed = 0.5; // Reduced speed for smoother movement
+
+            let phoneRect = null;
+
+            function createNetwork(centerX, centerY, networkGroup, size) {
+                const nodes = [];
+                const links = [];
+
+                // Create center node
+                const centerNode = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                centerNode.setAttribute('r', nodeRadius);
+                centerNode.setAttribute('fill', centerColor);
+                centerNode.setAttribute('cx', centerX);
+                centerNode.setAttribute('cy', centerY);
+                nodes.push({
+                    element: centerNode,
+                    isCenterNode: true,
+                    x: centerX,
+                    y: centerY,
+                    baseX: centerX,
+                    baseY: centerY,
+                    offsetX: 0,
+                    offsetY: 0,
+                    speed: Math.random() * maxSpeed * 0.5,
+                    angle: Math.random() * Math.PI * 2
+                });
+                networkGroup.appendChild(centerNode);
+
+                // Create orbit nodes
+                for (let i = 0; i < nodesInOrbit; i++) {
+                    const angle = (i / nodesInOrbit) * 2 * Math.PI;
+                    const x = centerX + size * Math.cos(angle);
+                    const y = centerY + size * Math.sin(angle);
+
+                    const node = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    node.setAttribute('r', nodeRadius);
+                    node.setAttribute('fill', orbitColor);
+                    node.setAttribute('cx', x);
+                    node.setAttribute('cy', y);
+                    nodes.push({
+                        element: node,
+                        baseAngle: angle,
+                        x: x,
+                        y: y,
+                        baseX: x,
+                        baseY: y,
+                        offsetX: 0,
+                        offsetY: 0,
+                        speed: Math.random() * maxSpeed,
+                        angle: Math.random() * Math.PI * 2
+                    });
+                    networkGroup.appendChild(node);
+
+                    // Create link to center node
+                    const linkToCenter = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    linkToCenter.setAttribute('stroke', orbitColor);
+                    linkToCenter.setAttribute('stroke-width', 0.5);
+                    linkToCenter.setAttribute('opacity', '0.3');
+                    links.push({ element: linkToCenter, source: nodes[0], target: nodes[nodes.length - 1] });
+                    networkGroup.appendChild(linkToCenter);
+
+                    // Create links to neighboring nodes
+                    if (i > 0) {
+                        const linkToNeighbor = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                        linkToNeighbor.setAttribute('stroke', orbitColor);
+                        linkToNeighbor.setAttribute('stroke-width', 0.5);
+                        linkToNeighbor.setAttribute('opacity', '0.3');
+                        links.push({ element: linkToNeighbor, source: nodes[nodes.length - 2], target: nodes[nodes.length - 1] });
+                        networkGroup.appendChild(linkToNeighbor);
+                    }
+                }
+
+                // Connect the last node to the first orbital node
+                const lastLink = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                lastLink.setAttribute('stroke', orbitColor);
+                lastLink.setAttribute('stroke-width', 0.5);
+                lastLink.setAttribute('opacity', '0.3');
+                links.push({ element: lastLink, source: nodes[nodes.length - 1], target: nodes[1] });
+                networkGroup.appendChild(lastLink);
+
+                return {
+                    nodes,
+                    links,
+                    velocity: {
+                        x: (Math.random() - 0.5) * networkSpeed,
+                        y: (Math.random() - 0.5) * networkSpeed
+                    }
+                };
+            }
+
+            const networkData = networks.map((network, index) => {
+                if (index < 3) {
+                    const centerX = Math.random() * 800 + 100; // Random X between 100 and 900
+                    const centerY = Math.random() * 800 + 100; // Random Y between 100 and 900
+                    return createNetwork(centerX, centerY, network, networkSize);
+                } else {
+                    return createNetwork(50, 50, network, phoneNetworkSize);
+                }
+            });
+
+            function updatePositions(timestamp) {
+                if (!phoneRect) {
+                    const phoneElement = document.querySelector('.mobile-device-container');
+                    phoneRect = phoneElement.getBoundingClientRect();
+                }
+
+                networkData.forEach(({ nodes, links, velocity }, networkIndex) => {
+                    const centerNode = nodes[0];
+
+                    // Move the entire network
+                    if (networkIndex < 3) { // Only move background networks
+                        centerNode.baseX += velocity.x;
+                        centerNode.baseY += velocity.y;
+
+                        // Bounce off edges
+                        const maxX = svg.viewBox.baseVal.width - networkSize;
+                        const maxY = svg.viewBox.baseVal.height - networkSize;
+                        if (centerNode.baseX < networkSize || centerNode.baseX > maxX) {
+                            velocity.x *= -1;
+                        }
+                        if (centerNode.baseY < networkSize || centerNode.baseY > maxY) {
+                            velocity.y *= -1;
+                        }
+
+                        // Avoid phone area
+                        const phoneBuffer = 20; // Buffer around the phone
+                        if (
+                            centerNode.baseX > phoneRect.left - phoneBuffer &&
+                            centerNode.baseX < phoneRect.right + phoneBuffer &&
+                            centerNode.baseY > phoneRect.top - phoneBuffer &&
+                            centerNode.baseY < phoneRect.bottom + phoneBuffer
+                        ) {
+                            // Reverse direction
+                            velocity.x *= -1;
+                            velocity.y *= -1;
+                        }
+                    }
+
+                    // Update center node
+                    centerNode.angle += centerNode.speed;
+                    centerNode.offsetX = Math.cos(centerNode.angle) * wanderRadius;
+                    centerNode.offsetY = Math.sin(centerNode.angle) * wanderRadius;
+                    centerNode.x = centerNode.baseX + centerNode.offsetX;
+                    centerNode.y = centerNode.baseY + centerNode.offsetY;
+
+                    centerNode.element.setAttribute('cx', centerNode.x);
+                    centerNode.element.setAttribute('cy', centerNode.y);
+
+                    // Update orbit nodes
+                    nodes.slice(1).forEach((node, index) => {
+                        // Slowly rotate the base position
+                        node.baseAngle += 0.0005;
+                        const size = node.element.ownerSVGElement.id === 'phoneNetwork' ? phoneNetworkSize : networkSize;
+                        node.baseX = centerNode.x + size * Math.cos(node.baseAngle);
+                        node.baseY = centerNode.y + size * Math.sin(node.baseAngle);
+
+                        // Update the wandering offset
+                        node.angle += node.speed;
+                        node.offsetX = Math.cos(node.angle) * wanderRadius;
+                        node.offsetY = Math.sin(node.angle) * wanderRadius;
+
+                        // Set the final position
+                        node.x = node.baseX + node.offsetX;
+                        node.y = node.baseY + node.offsetY;
+
+                        // Update node position
+                        node.element.setAttribute('cx', node.x);
+                        node.element.setAttribute('cy', node.y);
+                    });
+
+                    // Update links
+                    links.forEach(link => {
+                        link.element.setAttribute('x1', link.source.x);
+                        link.element.setAttribute('y1', link.source.y);
+                        link.element.setAttribute('x2', link.target.x);
+                        link.element.setAttribute('y2', link.target.y);
+                    });
+                });
+
+                requestAnimationFrame(updatePositions);
+            }
+
+            requestAnimationFrame(updatePositions);
+
+            // Adjust background SVG height
+            function adjustBackgroundHeight() {
+                const container = document.querySelector('.container');
+                const backgroundContainer = document.querySelector('.background-container');
+
+                backgroundContainer.style.height = `${container.offsetHeight}px`;
+
+                // Update phone rectangle after resize
+                const phoneElement = document.querySelector('.mobile-device-container');
+                phoneRect = phoneElement.getBoundingClientRect();
+            }
+
+            window.addEventListener('load', adjustBackgroundHeight);
+            window.addEventListener('resize', adjustBackgroundHeight);
+        });
+    </script>
+</body>
+
+</html>

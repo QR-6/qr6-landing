@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, sans-serif;
+            background-color: #2F3D44;
+            color: #fff;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            /* overflow: hidden; */
+            padding: 20px;
+        }
+
+        header {
+            padding: 20px 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            font-weight: 200;
+            max-width: 800px;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            font-weight: 500;
+            margin-bottom: 15px;
+            max-width: 400px;
+        }
+
+        p {
+            max-width: 600px;
+        }
+
+        .btn {
+            display: inline-block;
+            color: #fff;
+            padding: 8px 16px;
+            border: 1px solid #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+            margin-top: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #fff;
+        }
+
+        section {
+            padding: 40px 0;
+            text-align: left;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+        }
+
+        @media(max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+
+            h1,
+            h2,
+            p {
+                max-width: 100%;
+            }
+        }
+
+        #hero {
+            position: relative;
+            /* overflow: hidden; */
+            height: 400px;
+            width: 100%;
+        }
+
+        #hero svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        #hero .container {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    
+                    <img src="logo.svg">
+                </div>
+                <div class="nav-links">
+                    <a href="#">Login</a>
+                    <a href="#">Contact</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section id="hero">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400">
+            <rect width="100%" height="100%" fill="#2F3D44" />
+            <g id="network"></g>
+        </svg>
+        <div class="container">
+            <h1>AI-Powered Tools for Better Behavioral Health Outcomes</h1>
+            <h2>Applying cutting-edge technology to tackle the toughest challenges in behavioral health.</h2>
+            <!-- <a href="#" class="btn">Join Our Journey</a> -->
+        </div>
+    </section>
+
+    <section id="approach">
+        <div class="container">
+            <h3>
+                We augment professional expertise with AI to scale and innovate school-based mental health services. By keeping humans
+                in the loop, we ensure better safety, trust, and engagement compared to full automation. Our system is built on
+                evidence-based behavioral health methodologies and continuously improves through student outcomes and real-world
+                counselor feedback.
+            </h3>
+
+        </div>
+    </section>
+
+    <section id="cards">
+        <!--
+
+        Add 6 CARDS HERE
+
+        - ALL HAVE SINGLE ROUNED CORDER OUTLINE, BUT NO FILL OR ANYTHING
+        
+        - CARD FORMAT:
+        - ICON (SVG)
+        - TITLE (H4)
+        - DESCRIPTION (SINGLE SENTENCE)
+
+        
+        
+        CARDS:
+
+        1. HUMAN-CENTERED
+        - ICON : SIMPLE EYE WITH LASHES
+        - DESC: ...
+
+        2. AUGMENTED INTELLIGENCE
+        - ICON : 2 CIRCLES CONNECTED BY A LINE, one circle is a simplified human profile, the other is a a hexegon / burst
+        - DESC: ...
+
+        3. EVIDENCE-BASED
+        - ICON : CHECKMARK WITH RADIAL LINES
+        - DESC: ...
+        
+
+        4. CONTINUOUS IMPROVEMENT
+        - ICON : ARROW POINTING UP AND TO THE RIGHT
+        - DESC: ...
+
+
+        -->
+
+    </section>
+        
+
+    <footer>
+        <div class="container">
+            <p>© 2024 [Your Company Name]. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="background.js"></script>
+</body>
+
+</html>
