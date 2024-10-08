@@ -23,33 +23,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const numNetworksMax = 5;
     const numNetworks = Math.floor(Math.random() * (numNetworksMax - numNetworksMin + 1)) + numNetworksMin;
 
-    const nodeRadius = 0.5; // This will be used as a percentage of the viewBox
-    const nodeRadiusPhone = 0.5; // This will be used as a percentage of the viewBox
-    const networkSize = 60;
+    const nodeRadius = 1.5;
+    const networkSize = 50;
     const phoneNetworkSize = 30;
     const nodesInOrbitMin = 10;
     const nodesInOrbitMax = 18;
-    const wanderRadius = nodeRadius * 5.8;
+    const wanderRadius = nodeRadius * 1.8;
     const maxSpeed = 0.008;
     const networkSpeed = 0.003;
 
     let phoneRect = null;
-
-    // Create reusable node definitions
-    const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-    svg.appendChild(defs);
-
-    const centerNodeDef = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    centerNodeDef.setAttribute('id', 'centerNode');
-    centerNodeDef.setAttribute('r', `${nodeRadius}%`);
-    centerNodeDef.setAttribute('fill', centerColor);
-    defs.appendChild(centerNodeDef);
-
-    const orbitNodeDef = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    orbitNodeDef.setAttribute('id', 'orbitNode');
-    orbitNodeDef.setAttribute('r', `${nodeRadius}%`);
-    orbitNodeDef.setAttribute('fill', orbitColor);
-    defs.appendChild(orbitNodeDef);
 
     function createNetwork(centerX, centerY, networkGroup, size) {
         const nodes = [];
@@ -58,10 +41,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const nodesInOrbit = Math.floor(Math.random() * (nodesInOrbitMax - nodesInOrbitMin + 1)) + nodesInOrbitMin;
 
         // Create center node
-        const centerNode = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-        centerNode.setAttribute('href', '#centerNode');
-        centerNode.setAttribute('x', centerX);
-        centerNode.setAttribute('y', centerY);
+        const centerNode = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        centerNode.setAttribute('r', nodeRadius);
+        centerNode.setAttribute('fill', centerColor);
+        centerNode.setAttribute('cx', centerX);
+        centerNode.setAttribute('cy', centerY);
         nodes.push({
             element: centerNode,
             isCenterNode: true,
@@ -82,10 +66,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const x = centerX + size * Math.cos(angle);
             const y = centerY + size * Math.sin(angle);
 
-            const node = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-            node.setAttribute('href', '#orbitNode');
-            node.setAttribute('x', x);
-            node.setAttribute('y', y);
+            const node = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            node.setAttribute('r', nodeRadius);
+            node.setAttribute('fill', orbitColor);
+            node.setAttribute('cx', x);
+            node.setAttribute('cy', y);
             nodes.push({
                 element: node,
                 baseAngle: angle,
@@ -103,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // Create links
             const linkToCenter = document.createElementNS('http://www.w3.org/2000/svg', 'line');
             linkToCenter.setAttribute('stroke', orbitColor);
-            linkToCenter.setAttribute('stroke-width', `${nodeRadius / 2}%`);
+            linkToCenter.setAttribute('stroke-width', 0.5);
             linkToCenter.setAttribute('opacity', '0.3');
             links.push({ element: linkToCenter, source: nodes[0], target: nodes[nodes.length - 1] });
             networkGroup.appendChild(linkToCenter);
@@ -111,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (i > 0) {
                 const linkToNeighbor = document.createElementNS('http://www.w3.org/2000/svg', 'line');
                 linkToNeighbor.setAttribute('stroke', orbitColor);
-                linkToNeighbor.setAttribute('stroke-width', `${nodeRadius / 2}%`);
+                linkToNeighbor.setAttribute('stroke-width', 0.5);
                 linkToNeighbor.setAttribute('opacity', '0.3');
                 links.push({ element: linkToNeighbor, source: nodes[nodes.length - 2], target: nodes[nodes.length - 1] });
                 networkGroup.appendChild(linkToNeighbor);
@@ -121,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Connect the last node to the first orbital node
         const lastLink = document.createElementNS('http://www.w3.org/2000/svg', 'line');
         lastLink.setAttribute('stroke', orbitColor);
-        lastLink.setAttribute('stroke-width', `${nodeRadius / 2}%`);
+        lastLink.setAttribute('stroke-width', 0.5);
         lastLink.setAttribute('opacity', '0.3');
         links.push({ element: lastLink, source: nodes[nodes.length - 1], target: nodes[1] });
         networkGroup.appendChild(lastLink);
@@ -187,8 +172,8 @@ document.addEventListener('DOMContentLoaded', function () {
             centerNode.x = centerNode.baseX + centerNode.offsetX;
             centerNode.y = centerNode.baseY + centerNode.offsetY;
 
-            centerNode.element.setAttribute('x', centerNode.x);
-            centerNode.element.setAttribute('y', centerNode.y);
+            centerNode.element.setAttribute('cx', centerNode.x);
+            centerNode.element.setAttribute('cy', centerNode.y);
 
             // Update orbit nodes
             nodes.slice(1).forEach((node, index) => {
@@ -204,8 +189,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 node.x = node.baseX + node.offsetX;
                 node.y = node.baseY + node.offsetY;
 
-                node.element.setAttribute('x', node.x);
-                node.element.setAttribute('y', node.y);
+                node.element.setAttribute('cx', node.x);
+                node.element.setAttribute('cy', node.y);
             });
 
             // Update links
@@ -225,10 +210,11 @@ document.addEventListener('DOMContentLoaded', function () {
     // Adjust background SVG height
     function adjustBackgroundHeight() {
         console.log('adjustBackgroundHeight');
-        // Uncomment and adjust these lines if needed
         // const container = document.querySelector('.container');
         // const backgroundContainer = document.querySelector('.background-container');
+
         // backgroundContainer.style.height = `${container.offsetHeight}px`;
+
         // const phoneElement = document.querySelector('.mobile-device-container');
         // phoneRect = phoneElement.getBoundingClientRect();
     }
